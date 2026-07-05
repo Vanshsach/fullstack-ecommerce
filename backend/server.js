@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const { errorHandler } = require("./middleware/errorMiddleware");
+
 const express = require("express");
 const connectDB = require("./config/db");
 
@@ -12,6 +14,8 @@ connectDB();
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
+
+app.use(errorHandler);
 
 app.get("/", (req, res) => {
   res.send("Server is Running");
