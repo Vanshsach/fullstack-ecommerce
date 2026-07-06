@@ -10,9 +10,39 @@ const createProduct = asyncHandler(async (req, res) => {
 
 // Get All Products
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find();
+  let filter = {};
 
-  res.json(products);
+  // Search
+  if (req.query.keyword) {
+    filter.name = {
+      $regex: req.query.keyword,
+      $options: "i",
+    };
+  }
+
+  // Category
+  if (req.query.category) {
+    filter.category = req.query.category;
+  }
+
+  const pageSize = 2; // products per page
+  const page = Number(req.query.page) || 1;
+
+  const count = await Product.countDocuments(filter);
+
+  const sort = req.query.sort || "-createdAt";
+
+const products = await Product.find(filter)
+  .sort(sort)
+  .limit(pageSize)
+  .skip(pageSize * (page - 1));
+
+  res.json({
+    products,
+    page,
+    pages: Math.ceil(count / pageSize),
+    totalProducts: count,
+  });
 });
 
 // Get Single Product
