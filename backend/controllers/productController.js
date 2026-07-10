@@ -3,7 +3,37 @@ const asyncHandler = require("../utils/asyncHandler");
 
 // Add Product
 const createProduct = asyncHandler(async (req, res) => {
-  const product = await Product.create(req.body);
+  const {
+    name,
+    price,
+    description,
+    image,
+    brand,
+    category,
+    countInStock,
+  } = req.body;
+
+  if (
+    !name ||
+    !price ||
+    !description ||
+    !image ||
+    !brand ||
+    !category
+  ) {
+    res.status(400);
+    throw new Error("Please fill all required fields");
+  }
+
+  const product = await Product.create({
+    name,
+    price,
+    description,
+    image,
+    brand,
+    category,
+    countInStock,
+  });
 
   res.status(201).json(product);
 });
