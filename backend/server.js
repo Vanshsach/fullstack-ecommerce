@@ -1,3 +1,5 @@
+const cors = require("cors");
+
 require("dotenv").config();
 
 const { errorHandler } = require("./middleware/errorMiddleware");
@@ -15,6 +17,8 @@ const app = express();
 
 connectDB();
 
+app.use(cors());
+
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
@@ -22,7 +26,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/upload", uploadRoutes);
 
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use("/images", express.static(path.join(__dirname, "/uploads")));
 
 app.get("/", (req, res) => {
   res.send("Server is Running");
