@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 const ProductCard = ({ product }) => {
   return (
-    <div className="border rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
+    <div className="border rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white">
       <img
         src={`http://localhost:5000${product.image}`}
         alt={product.name}
@@ -8,13 +9,15 @@ const ProductCard = ({ product }) => {
       />
 
       <div className="p-4">
-        <h2 className="text-lg font-semibold">
-          {product.name}
-        </h2>
+        <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
 
-        <p className="text-gray-600 mt-2">
-          ₹{product.price}
-        </p>
+        <p className="text-gray-600 mb-3">₹{product.price}</p>
+
+        <Link to={`/product/${product._id}`}>
+          <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+            View Details
+          </button>
+        </Link>
       </div>
     </div>
   );
