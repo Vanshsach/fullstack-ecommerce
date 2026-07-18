@@ -1,15 +1,17 @@
+import { Link } from "react-router-dom";
+
 function Navbar() {
   return (
     <nav className="bg-blue-600 text-white p-4">
       <div className="max-w-7xl mx-auto flex justify-between">
         <h1 className="text-2xl font-bold">
-          MERN Shop
+          <Link to="/">MERN Shop</Link>
         </h1>
 
         <div className="space-x-6">
-          <a href="/">Home</a>
-          <a href="/">Cart</a>
-          <a href="/">Login</a>
+          <Link to="/">Home</Link>
+          <Link to="/cart">Cart</Link>
+          <Link to="/login">Login</Link>
         </div>
       </div>
     </nav>
